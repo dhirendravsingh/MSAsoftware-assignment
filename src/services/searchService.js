@@ -1,20 +1,21 @@
-
 const axios = require("axios");
 
-const API_KEY = "fsq30umAWsCo5CygUCL2WLZZ7p+TFqVM/J/YgPVZQPJ8HhI";
+const API_KEY = "fsq3r1r3SM1GJURYa22HVi4hwjaRn3aSWGIDHQX6L9EVsao=";
 const BASE_URL = "https://api.foursquare.com/v3/places/search";
 
 async function fetchPlaces(category) {
-    const response = await axios.get(BASE_URL, {
-        headers: { Authorization: `Bearer ${API_KEY}` },
-        params: { term: category, location: "Delhi", limit: 5 }
-    });
-    return response.data.businesses.map(b => ({
-        name: b.name,
-        address: b.location.address1,
-        rating: b.rating,
-        phone: b.phone
-    }));
+  const options = {
+    method: 'GET',
+    url: `${BASE_URL}?categories=${category}`,
+    headers: {
+      accept: 'application/json',
+      Authorization: API_KEY
+    }
+  };
+  axios
+    .request(options)
+    .then(res => console.log(res.data))
+    .catch(err => console.error(err));
 }
 
 module.exports = {
